@@ -8,58 +8,51 @@
 #include "ff.h"
 #include "string.h"
 
-
 void usb_dc_low_level_init(uint8_t busid)
 {
-  GPIO_InitTypeDef GPIO_InitStructure;   
+    GPIO_InitTypeDef GPIO_InitStructure;
 
-  RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA , ENABLE);
-  
-  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_11 | 
-                                GPIO_Pin_12;
-  
-  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
-  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
-  GPIO_Init(GPIOA, &GPIO_InitStructure);  
-  
-  GPIO_PinAFConfig(GPIOA,GPIO_PinSource11,GPIO_AF_OTG1_FS) ; 
-  GPIO_PinAFConfig(GPIOA,GPIO_PinSource12,GPIO_AF_OTG1_FS) ;
+    RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA, ENABLE);
 
-  
-  RCC_AHB2PeriphClockCmd( RCC_AHB2Periph_OTG_FS, ENABLE) ;
+    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_11 | GPIO_Pin_12;
 
-  //中断
-  NVIC_InitTypeDef NVIC_InitStructure; 
-  
-  NVIC_PriorityGroupConfig(NVIC_PriorityGroup_1);
-  NVIC_InitStructure.NVIC_IRQChannel = OTG_FS_IRQn;
+    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
+    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
+    GPIO_Init(GPIOA, &GPIO_InitStructure);
 
-  NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;
-  NVIC_InitStructure.NVIC_IRQChannelSubPriority = 3;
-  NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
-  NVIC_Init(&NVIC_InitStructure);  
+    GPIO_PinAFConfig(GPIOA, GPIO_PinSource11, GPIO_AF_OTG1_FS);
+    GPIO_PinAFConfig(GPIOA, GPIO_PinSource12, GPIO_AF_OTG1_FS);
+
+    RCC_AHB2PeriphClockCmd(RCC_AHB2Periph_OTG_FS, ENABLE);
+
+    //中断
+    NVIC_InitTypeDef NVIC_InitStructure;
+
+    NVIC_PriorityGroupConfig(NVIC_PriorityGroup_1);
+    NVIC_InitStructure.NVIC_IRQChannel = OTG_FS_IRQn;
+
+    NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;
+    NVIC_InitStructure.NVIC_IRQChannelSubPriority = 3;
+    NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+    NVIC_Init(&NVIC_InitStructure);
 #ifdef USB_OTG_HS_DEDICATED_EP1_ENABLED
-  NVIC_PriorityGroupConfig(NVIC_PriorityGroup_1);
-  NVIC_InitStructure.NVIC_IRQChannel = OTG_HS_EP1_OUT_IRQn;
-  NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;
-  NVIC_InitStructure.NVIC_IRQChannelSubPriority = 2;
-  NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
-  NVIC_Init(&NVIC_InitStructure);  
-  
-  NVIC_PriorityGroupConfig(NVIC_PriorityGroup_1);
-  NVIC_InitStructure.NVIC_IRQChannel = OTG_HS_EP1_IN_IRQn;
-  NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;
-  NVIC_InitStructure.NVIC_IRQChannelSubPriority = 1;
-  NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
-  NVIC_Init(&NVIC_InitStructure);   
+    NVIC_PriorityGroupConfig(NVIC_PriorityGroup_1);
+    NVIC_InitStructure.NVIC_IRQChannel = OTG_HS_EP1_OUT_IRQn;
+    NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;
+    NVIC_InitStructure.NVIC_IRQChannelSubPriority = 2;
+    NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+    NVIC_Init(&NVIC_InitStructure);
+
+    NVIC_PriorityGroupConfig(NVIC_PriorityGroup_1);
+    NVIC_InitStructure.NVIC_IRQChannel = OTG_HS_EP1_IN_IRQn;
+    NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;
+    NVIC_InitStructure.NVIC_IRQChannelSubPriority = 1;
+    NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+    NVIC_Init(&NVIC_InitStructure);
 #endif
 }
 
-void usb_dc_low_level_deinit(uint8_t busid)
-{
-
-
-}
+void usb_dc_low_level_deinit(uint8_t busid) { }
 
 /**
 * @brief  USB_OTG_BSP_uDelay
@@ -81,7 +74,6 @@ void usb_dc_low_level_deinit(uint8_t busid)
 //  while (1);
 //}
 
-
 /**
 * @brief  USB_OTG_BSP_mDelay
 *          This function provides delay time in milli sec
@@ -90,28 +82,25 @@ void usb_dc_low_level_deinit(uint8_t busid)
 */
 void usbd_dwc2_delay_ms(uint8_t ms)
 {
-  //USB_OTG_BSP_uDelay(ms * 1000);   
+    //USB_OTG_BSP_uDelay(ms * 1000);
 }
 
-uint32_t usbd_get_dwc2_gccfg_conf(uint32_t reg_base)
-{
-  return ((1 << 16) | (1 << 21));
-}
+uint32_t usbd_get_dwc2_gccfg_conf(uint32_t reg_base) { return ((1 << 16) | (1 << 21)); }
 
 int kprintf(const char *fmt, ...)
 {
-	/* todo */
-	return 0;
+    /* todo */
+    return 0;
 }
 
 extern int led_init(void);
 void bsp_init(void)
 {
     led_init();
-	Debug_USART_Config();
+    Debug_USART_Config();
 }
 
-FATFS fs;													/* FatFs文件系统对象 */
+FATFS fs; /* FatFs文件系统对象 */
 uint8_t work[4096];
 
 /**
@@ -122,23 +111,20 @@ uint8_t work[4096];
 int main(void)
 {
     bsp_init();
-	
-	f_mount(&fs, "1:", 1);
-	
+
+    f_mount(&fs, "1:", 1);
 
     AppTaskCreate();
-    
-	while (1) {
-        ;
-	}
-}
 
+    while (1) {
+        ;
+    }
+}
 
 void OTG_FS_IRQHandler(void)
 {
-	extern void USBD_IRQHandler(uint8_t busid);
-	USBD_IRQHandler(0);
+    extern void USBD_IRQHandler(uint8_t busid);
+    USBD_IRQHandler(0);
 }
 
 /*********************************************END OF FILE**********************/
-

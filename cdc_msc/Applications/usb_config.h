@@ -106,18 +106,18 @@ extern int kprintf(const char *fmt, ...);
 
 /* ================ USB HOST Stack Configuration ================== */
 
-#define CONFIG_USBHOST_MAX_RHPORTS          1
-#define CONFIG_USBHOST_MAX_EXTHUBS          1
-#define CONFIG_USBHOST_MAX_EHPORTS          4
-#define CONFIG_USBHOST_MAX_INTERFACES       8
+#define CONFIG_USBHOST_MAX_RHPORTS 1
+#define CONFIG_USBHOST_MAX_EXTHUBS 1
+#define CONFIG_USBHOST_MAX_EHPORTS 4
+#define CONFIG_USBHOST_MAX_INTERFACES 8
 #define CONFIG_USBHOST_MAX_INTF_ALTSETTINGS 8
-#define CONFIG_USBHOST_MAX_ENDPOINTS        4
+#define CONFIG_USBHOST_MAX_ENDPOINTS 4
 
 #define CONFIG_USBHOST_MAX_CDC_ACM_CLASS 4
-#define CONFIG_USBHOST_MAX_HID_CLASS     4
-#define CONFIG_USBHOST_MAX_MSC_CLASS     2
-#define CONFIG_USBHOST_MAX_AUDIO_CLASS   1
-#define CONFIG_USBHOST_MAX_VIDEO_CLASS   1
+#define CONFIG_USBHOST_MAX_HID_CLASS 4
+#define CONFIG_USBHOST_MAX_MSC_CLASS 2
+#define CONFIG_USBHOST_MAX_AUDIO_CLASS 1
+#define CONFIG_USBHOST_MAX_VIDEO_CLASS 1
 
 #define CONFIG_USBHOST_DEV_NAMELEN 16
 
@@ -220,17 +220,17 @@ extern int kprintf(const char *fmt, ...);
 /* (5 * number of control endpoints + 8) + ((largest USB packet used / 4) + 1 for
  * status information) + (2 * number of OUT endpoints) + 1 for Global NAK
  */
- #define CONFIG_USB_DWC2_RXALL_FIFO_SIZE (512 / 4)
+#define CONFIG_USB_DWC2_RXALL_FIFO_SIZE (512 / 4)
 /* IN Endpoints Max packet Size / 4 */
- #define CONFIG_USB_DWC2_TX0_FIFO_SIZE (256 / 4)
- #define CONFIG_USB_DWC2_TX1_FIFO_SIZE (256 / 4)
- #define CONFIG_USB_DWC2_TX2_FIFO_SIZE (128 / 4)
- #define CONFIG_USB_DWC2_TX3_FIFO_SIZE (128 / 4)
- #define CONFIG_USB_DWC2_TX4_FIFO_SIZE (0 / 4)
- #define CONFIG_USB_DWC2_TX5_FIFO_SIZE (0 / 4)
- #define CONFIG_USB_DWC2_TX6_FIFO_SIZE (0 / 4)
- #define CONFIG_USB_DWC2_TX7_FIFO_SIZE (0 / 4)
- #define CONFIG_USB_DWC2_TX8_FIFO_SIZE (0 / 4)
+#define CONFIG_USB_DWC2_TX0_FIFO_SIZE (256 / 4)
+#define CONFIG_USB_DWC2_TX1_FIFO_SIZE (256 / 4)
+#define CONFIG_USB_DWC2_TX2_FIFO_SIZE (128 / 4)
+#define CONFIG_USB_DWC2_TX3_FIFO_SIZE (128 / 4)
+#define CONFIG_USB_DWC2_TX4_FIFO_SIZE (0 / 4)
+#define CONFIG_USB_DWC2_TX5_FIFO_SIZE (0 / 4)
+#define CONFIG_USB_DWC2_TX6_FIFO_SIZE (0 / 4)
+#define CONFIG_USB_DWC2_TX7_FIFO_SIZE (0 / 4)
+#define CONFIG_USB_DWC2_TX8_FIFO_SIZE (0 / 4)
 
 /* ---------------- MUSB Configuration ---------------- */
 // #define CONFIG_USB_MUSB_SUNXI
@@ -246,11 +246,11 @@ extern int kprintf(const char *fmt, ...);
 
 /* ---------------- EHCI Configuration ---------------- */
 
-#define CONFIG_USB_EHCI_HCCR_OFFSET     (0x0)
+#define CONFIG_USB_EHCI_HCCR_OFFSET (0x0)
 #define CONFIG_USB_EHCI_FRAME_LIST_SIZE 1024
-#define CONFIG_USB_EHCI_QH_NUM          CONFIG_USBHOST_PIPE_NUM
-#define CONFIG_USB_EHCI_QTD_NUM         3
-#define CONFIG_USB_EHCI_ITD_NUM         20
+#define CONFIG_USB_EHCI_QH_NUM CONFIG_USBHOST_PIPE_NUM
+#define CONFIG_USB_EHCI_QTD_NUM 3
+#define CONFIG_USB_EHCI_ITD_NUM 20
 // #define CONFIG_USB_EHCI_HCOR_RESERVED_DISABLE
 // #define CONFIG_USB_EHCI_CONFIGFLAG
 // #define CONFIG_USB_EHCI_ISO

@@ -8,7 +8,7 @@ void AppTaskCreate(void)
 {
     uint8_t i;
     taskENTER_CRITICAL();
-    
+
     /* 依次创建任务 */
     for (i = 0; i < USER_TASK_NUM; i++) {
         if (task_create_func[i] == NULL) {
@@ -16,8 +16,8 @@ void AppTaskCreate(void)
         }
         (*task_create_func[i])();
     }
-    
+
     taskEXIT_CRITICAL();
-    
+
     vTaskStartScheduler();
 }
