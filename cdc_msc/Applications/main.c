@@ -52,7 +52,9 @@ void usb_dc_low_level_init(uint8_t busid)
 #endif
 }
 
-void usb_dc_low_level_deinit(uint8_t busid) { }
+void usb_dc_low_level_deinit(uint8_t busid)
+{
+}
 
 /**
 * @brief  USB_OTG_BSP_uDelay
@@ -85,7 +87,10 @@ void usbd_dwc2_delay_ms(uint8_t ms)
     //USB_OTG_BSP_uDelay(ms * 1000);
 }
 
-uint32_t usbd_get_dwc2_gccfg_conf(uint32_t reg_base) { return ((1 << 16) | (1 << 21)); }
+uint32_t usbd_get_dwc2_gccfg_conf(uint32_t reg_base)
+{
+    return ((1 << 16) | (1 << 21));
+}
 
 int kprintf(const char *fmt, ...)
 {
