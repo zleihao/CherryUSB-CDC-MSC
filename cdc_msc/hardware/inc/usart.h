@@ -4,11 +4,11 @@
 #include "stm32f4xx.h"
 #include <stdio.h>
 
-//Òı½Å¶¨Òå
+//å¼•è„šå®šä¹‰
 /*******************************************************/
 #define DEBUG_USART USART1
 #define DEBUG_USART_CLK RCC_APB2Periph_USART1
-#define DEBUG_USART_BAUDRATE 115200 //´®¿Ú²¨ÌØÂÊ
+#define DEBUG_USART_BAUDRATE 115200 //ä¸²å£æ³¢ç‰¹ç‡
 
 #define DEBUG_USART_RX_GPIO_PORT GPIOB
 #define DEBUG_USART_RX_GPIO_CLK RCC_AHB1Periph_GPIOB

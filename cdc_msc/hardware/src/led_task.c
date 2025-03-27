@@ -3,28 +3,28 @@
 
 int led_init(void)
 {
-    /*¶¨ÒåÒ»¸öGPIO_InitTypeDefÀàÐÍµÄ½á¹¹Ìå*/
+    /*å®šä¹‰ä¸€ä¸ªGPIO_InitTypeDefç±»åž‹çš„ç»“æž„ä½“*/
     GPIO_InitTypeDef GPIO_InitStructure;
 
-    /*¿ªÆôLEDÏà¹ØµÄGPIOÍâÉèÊ±ÖÓ*/
+    /*å¼€å¯LEDç›¸å…³çš„GPIOå¤–è®¾æ—¶é’Ÿ*/
     RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB, ENABLE);
 
-    /*Ñ¡ÔñÒª¿ØÖÆµÄGPIOÒý½Å*/
+    /*é€‰æ‹©è¦æŽ§åˆ¶çš„GPIOå¼•è„š*/
     GPIO_InitStructure.GPIO_Pin = GPIO_Pin_2;
 
-    /*ÉèÖÃÒý½ÅÄ£Ê½ÎªÊä³öÄ£Ê½*/
+    /*è®¾ç½®å¼•è„šæ¨¡å¼ä¸ºè¾“å‡ºæ¨¡å¼*/
     GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
 
-    /*ÉèÖÃÒý½ÅµÄÊä³öÀàÐÍÎªÍÆÍìÊä³ö*/
+    /*è®¾ç½®å¼•è„šçš„è¾“å‡ºç±»åž‹ä¸ºæŽ¨æŒ½è¾“å‡º*/
     GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
 
-    /*ÉèÖÃÒý½ÅÎªÉÏÀ­Ä£Ê½*/
+    /*è®¾ç½®å¼•è„šä¸ºä¸Šæ‹‰æ¨¡å¼*/
     GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;
 
-    /*ÉèÖÃÒý½ÅËÙÂÊÎª2MHz */
+    /*è®¾ç½®å¼•è„šé€ŸçŽ‡ä¸º2MHz */
     GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
 
-    /*µ÷ÓÃ¿âº¯Êý£¬Ê¹ÓÃÉÏÃæÅäÖÃµÄGPIO_InitStructure³õÊ¼»¯GPIO*/
+    /*è°ƒç”¨åº“å‡½æ•°ï¼Œä½¿ç”¨ä¸Šé¢é…ç½®çš„GPIO_InitStructureåˆå§‹åŒ–GPIO*/
     GPIO_Init(GPIOB, &GPIO_InitStructure);
 
     return 0;

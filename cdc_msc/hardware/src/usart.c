@@ -7,33 +7,33 @@ uint8_t receive[4096];
 uint32_t g_uart_tx_transfer_length = 0;
 
 /**
-  * @brief  ÅäÖÃÇ¶Ì×ÏòÁ¿ÖĞ¶Ï¿ØÖÆÆ÷NVIC
-  * @param  ÎŞ
-  * @retval ÎŞ
+  * @brief  é…ç½®åµŒå¥—å‘é‡ä¸­æ–­æ§åˆ¶å™¨NVIC
+  * @param  æ— 
+  * @retval æ— 
   */
 static void NVIC_Configuration(void)
 {
     NVIC_InitTypeDef NVIC_InitStructure;
 
-    /* Ç¶Ì×ÏòÁ¿ÖĞ¶Ï¿ØÖÆÆ÷×éÑ¡Ôñ */
+    /* åµŒå¥—å‘é‡ä¸­æ–­æ§åˆ¶å™¨ç»„é€‰æ‹© */
     NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
 
-    /* ÅäÖÃUSARTÎªÖĞ¶ÏÔ´ */
+    /* é…ç½®USARTä¸ºä¸­æ–­æº */
     NVIC_InitStructure.NVIC_IRQChannel = DEBUG_USART_IRQ;
-    /* ÇÀ¶ÏÓÅÏÈ¼¶Îª1 */
+    /* æŠ¢æ–­ä¼˜å…ˆçº§ä¸º1 */
     NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
-    /* ×ÓÓÅÏÈ¼¶Îª1 */
+    /* å­ä¼˜å…ˆçº§ä¸º1 */
     NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
-    /* Ê¹ÄÜÖĞ¶Ï */
+    /* ä½¿èƒ½ä¸­æ–­ */
     NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
-    /* ³õÊ¼»¯ÅäÖÃNVIC */
+    /* åˆå§‹åŒ–é…ç½®NVIC */
     NVIC_Init(&NVIC_InitStructure);
 }
 
 /**
-  * @brief  DEBUG_USART GPIO ÅäÖÃ,¹¤×÷Ä£Ê½ÅäÖÃ¡£115200 8-N-1 £¬ÖĞ¶Ï½ÓÊÕÄ£Ê½
-  * @param  ÎŞ
-  * @retval ÎŞ
+  * @brief  DEBUG_USART GPIO é…ç½®,å·¥ä½œæ¨¡å¼é…ç½®ã€‚115200 8-N-1 ï¼Œä¸­æ–­æ¥æ”¶æ¨¡å¼
+  * @param  æ— 
+  * @retval æ— 
   */
 void Debug_USART_Config(void)
 {
@@ -42,27 +42,27 @@ void Debug_USART_Config(void)
 
     RCC_AHB1PeriphClockCmd(DEBUG_USART_RX_GPIO_CLK | DEBUG_USART_TX_GPIO_CLK, ENABLE);
 
-    /* Ê¹ÄÜ USART Ê±ÖÓ */
+    /* ä½¿èƒ½ USART æ—¶é’Ÿ */
     RCC_APB2PeriphClockCmd(DEBUG_USART_CLK, ENABLE);
 
-    /* GPIO³õÊ¼»¯ */
+    /* GPIOåˆå§‹åŒ– */
     GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
     GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;
     GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
 
-    /* ÅäÖÃTxÒı½ÅÎª¸´ÓÃ¹¦ÄÜ  */
+    /* é…ç½®Txå¼•è„šä¸ºå¤ç”¨åŠŸèƒ½  */
     GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
     GPIO_InitStructure.GPIO_Pin = DEBUG_USART_TX_PIN;
     GPIO_Init(DEBUG_USART_TX_GPIO_PORT, &GPIO_InitStructure);
 
-    /* ÅäÖÃRxÒı½ÅÎª¸´ÓÃ¹¦ÄÜ */
+    /* é…ç½®Rxå¼•è„šä¸ºå¤ç”¨åŠŸèƒ½ */
     GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
     GPIO_InitStructure.GPIO_Pin = DEBUG_USART_RX_PIN;
     GPIO_Init(DEBUG_USART_RX_GPIO_PORT, &GPIO_InitStructure);
 
-    /* Á¬½Ó PXx µ½ USARTx_Tx*/
+    /* è¿æ¥ PXx åˆ° USARTx_Tx*/
     GPIO_PinAFConfig(DEBUG_USART_RX_GPIO_PORT, DEBUG_USART_RX_SOURCE, DEBUG_USART_RX_AF);
-    /*  Á¬½Ó PXx µ½ USARTx__Rx*/
+    /*  è¿æ¥ PXx åˆ° USARTx__Rx*/
     GPIO_PinAFConfig(DEBUG_USART_TX_GPIO_PORT, DEBUG_USART_TX_SOURCE, DEBUG_USART_TX_AF);
 
     NVIC_Configuration();
@@ -97,41 +97,41 @@ void usb2uart_rx_dma_config(void)
 
     DMA_Init(DMA2_Stream2, &dma_init_struct);
 
-    /* ÅäÖÃ DMA ÖĞ¶Ï */
-    /* Ç¶Ì×ÏòÁ¿ÖĞ¶Ï¿ØÖÆÆ÷×éÑ¡Ôñ */
+    /* é…ç½® DMA ä¸­æ–­ */
+    /* åµŒå¥—å‘é‡ä¸­æ–­æ§åˆ¶å™¨ç»„é€‰æ‹© */
     NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
 
-    /* ÅäÖÃUSARTÎªÖĞ¶ÏÔ´ */
+    /* é…ç½®USARTä¸ºä¸­æ–­æº */
     NVIC_InitStructure.NVIC_IRQChannel = DMA2_Stream4_IRQn;
-    /* ÇÀ¶ÏÓÅÏÈ¼¶Îª1 */
+    /* æŠ¢æ–­ä¼˜å…ˆçº§ä¸º1 */
     NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
-    /* ×ÓÓÅÏÈ¼¶Îª1 */
+    /* å­ä¼˜å…ˆçº§ä¸º1 */
     NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
-    /* Ê¹ÄÜÖĞ¶Ï */
+    /* ä½¿èƒ½ä¸­æ–­ */
     NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
-    /* ³õÊ¼»¯ÅäÖÃNVIC */
+    /* åˆå§‹åŒ–é…ç½®NVIC */
     NVIC_Init(&NVIC_InitStructure);
 
-    //Ê¹ÄÜDMA´«ÊäÍê³ÉÖĞ¶Ï
+    //ä½¿èƒ½DMAä¼ è¾“å®Œæˆä¸­æ–­
     DMA_ITConfig(DMA2_Stream2, DMA_IT_TC, ENABLE);
 
-    //Ê¹ÄÜ DMA Í¨µÀ
+    //ä½¿èƒ½ DMA é€šé“
     DMA_Cmd(DMA2_Stream2, ENABLE);
 
     USART_DMACmd(USART1, USART_DMAReq_Rx, ENABLE);
 
-    /* ÅäÖÃ USART1 ÖĞ¶Ï */
-    // ½ûÓÃUSART½ÓÊÕ»º³å·Ç¿ÕÖĞ¶Ï
+    /* é…ç½® USART1 ä¸­æ–­ */
+    // ç¦ç”¨USARTæ¥æ”¶ç¼“å†²éç©ºä¸­æ–­
     USART_ITConfig(USART1, USART_IT_RXNE, DISABLE);
 
-    // Çå³ıUSART¿ÕÏĞ±êÖ¾
+    // æ¸…é™¤USARTç©ºé—²æ ‡å¿—
     USART_ClearITPendingBit(USART1, USART_IT_IDLE);
-    // Ê¹ÄÜUSART¿ÕÏĞÖĞ¶Ï
+    // ä½¿èƒ½USARTç©ºé—²ä¸­æ–­
     USART_ITConfig(USART1, USART_IT_IDLE, ENABLE);
 
-    // Çå³ıUSART·¢ËÍÍê³É
+    // æ¸…é™¤USARTå‘é€å®Œæˆ
     USART_ClearITPendingBit(USART1, USART_IT_TC);
-    // Ê¹ÄÜUSART·¢ËÍÍê³ÉÖĞ¶Ï
+    // ä½¿èƒ½USARTå‘é€å®Œæˆä¸­æ–­
     USART_ITConfig(USART1, USART_IT_TC, ENABLE);
 }
 
@@ -165,34 +165,34 @@ void usb2uart_uart_send_bydma(uint8_t *data, uint32_t len)
 
     DMA_Init(DMA2_Stream7, &dma_init_struct);
 
-    /* ÅäÖÃ DMA ÖĞ¶Ï */
-    /* Ç¶Ì×ÏòÁ¿ÖĞ¶Ï¿ØÖÆÆ÷×éÑ¡Ôñ */
+    /* é…ç½® DMA ä¸­æ–­ */
+    /* åµŒå¥—å‘é‡ä¸­æ–­æ§åˆ¶å™¨ç»„é€‰æ‹© */
     NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
 
-    /* ÅäÖÃUSARTÎªÖĞ¶ÏÔ´ */
+    /* é…ç½®USARTä¸ºä¸­æ–­æº */
     NVIC_InitStructure.NVIC_IRQChannel = DMA2_Stream7_IRQn;
-    /* ÇÀ¶ÏÓÅÏÈ¼¶Îª1 */
+    /* æŠ¢æ–­ä¼˜å…ˆçº§ä¸º1 */
     NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;
-    /* ×ÓÓÅÏÈ¼¶Îª1 */
+    /* å­ä¼˜å…ˆçº§ä¸º1 */
     NVIC_InitStructure.NVIC_IRQChannelSubPriority = 1;
-    /* Ê¹ÄÜÖĞ¶Ï */
+    /* ä½¿èƒ½ä¸­æ–­ */
     NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
-    /* ³õÊ¼»¯ÅäÖÃNVIC */
+    /* åˆå§‹åŒ–é…ç½®NVIC */
     NVIC_Init(&NVIC_InitStructure);
 
-    //Ê¹ÄÜDMA´«ÊäÍê³ÉÖĞ¶Ï
+    //ä½¿èƒ½DMAä¼ è¾“å®Œæˆä¸­æ–­
     DMA_ITConfig(DMA2_Stream7, DMA_IT_TC, ENABLE);
 
     USART_DMACmd(USART1, USART_DMAReq_Tx, ENABLE);
 
-    //Ê¹ÄÜ DMA Í¨µÀ
+    //ä½¿èƒ½ DMA é€šé“
     DMA_Cmd(DMA2_Stream7, ENABLE);
 }
 
-// CDC UARTÅäÖÃ»Øµ÷º¯Êı
+// CDC UARTé…ç½®å›è°ƒå‡½æ•°
 void usb2uart_uart_config_callback(struct cdc_line_coding *line_coding)
 {
-    // ½ûÓÃUSART1
+    // ç¦ç”¨USART1
     USART_Cmd(USART1, DISABLE);
 
     USART_DeInit(USART1);
@@ -212,13 +212,13 @@ void usb2uart_uart_config_callback(struct cdc_line_coding *line_coding)
     USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
     USART_InitStructure.USART_Mode = USART_Mode_Rx | USART_Mode_Tx;
 
-    // Ó¦ÓÃÅäÖÃ
+    // åº”ç”¨é…ç½®
     USART_Init(USART1, &USART_InitStructure);
 
-    // Ê¹ÄÜUSART1
+    // ä½¿èƒ½USART1
     USART_Cmd(USART1, ENABLE);
 
-    // ÅäÖÃDMA½ÓÊÕ£¨¼ÙÉèusb2uart_rx_dma_config()º¯ÊıÒÑ¾­ÊµÏÖ£©
+    // é…ç½®DMAæ¥æ”¶ï¼ˆå‡è®¾usb2uart_rx_dma_config()å‡½æ•°å·²ç»å®ç°ï¼‰
     usb2uart_rx_dma_config();
 }
 
@@ -251,18 +251,18 @@ void USART1_IRQHandler(void)
         USART1->SR;
         USART1->DR;
 
-        //½ûÓÃ DMA ´«Êä
+        //ç¦ç”¨ DMA ä¼ è¾“
         DMA_Cmd(DMA2_Stream2, DISABLE);
 
         receive_len = DMA2_Stream2->NDTR;
 
-        /* ½«½ÓÊÕµ½µÄÊı¾İ·Åµ½»·ĞÎ»º³åÇøÖĞ */
+        /* å°†æ¥æ”¶åˆ°çš„æ•°æ®æ”¾åˆ°ç¯å½¢ç¼“å†²åŒºä¸­ */
         chry_ringbuffer_write(&g_uart_rx, receive, sizeof(receive) - receive_len);
 
         usb2uart_rx_dma_config();
     }
 
-    //¼ì²é USART ·¢ËÍÍê³ÉÖĞ¶Ï±êÖ¾
+    //æ£€æŸ¥ USART å‘é€å®Œæˆä¸­æ–­æ ‡å¿—
     if (SET == USART_GetITStatus(USART1, USART_IT_TC)) {
         USART_ClearITPendingBit(USART1, USART_IT_TC);
     }
@@ -270,14 +270,14 @@ void USART1_IRQHandler(void)
 
 /*************************************************************/
 
-///ÖØ¶¨Ïòc¿âº¯Êıprintfµ½´®¿Ú£¬ÖØ¶¨Ïòºó¿ÉÊ¹ÓÃprintfº¯Êı
+///é‡å®šå‘cåº“å‡½æ•°printfåˆ°ä¸²å£ï¼Œé‡å®šå‘åå¯ä½¿ç”¨printfå‡½æ•°
 int _write(int fd, char *pBuffer, int size)
 {
     for (int i = 0; i < size; i++) {
-        while ((USART1->SR & 0X40) == 0) { //µÈ´ıÉÏÒ»´Î´®¿ÚÊı¾İ·¢ËÍÍê³É
+        while ((USART1->SR & 0X40) == 0) { //ç­‰å¾…ä¸Šä¸€æ¬¡ä¸²å£æ•°æ®å‘é€å®Œæˆ
             ;
         }
-        USART1->DR = (uint8_t)pBuffer[i]; //Ğ´DR,´®¿Ú1½«·¢ËÍÊı¾İ
+        USART1->DR = (uint8_t)pBuffer[i]; //å†™DR,ä¸²å£1å°†å‘é€æ•°æ®
     }
     return size;
 }

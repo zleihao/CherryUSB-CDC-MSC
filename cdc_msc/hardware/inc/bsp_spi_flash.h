@@ -15,7 +15,7 @@
 #define SPI_FLASH_PerWritePageSize 256
 
 /* Private define ------------------------------------------------------------*/
-/*ÃüÁî¶¨Òå-¿ªÍ·*******************************/
+/*å‘½ä»¤å®šä¹‰-å¼€å¤´*******************************/
 #define W25X_WriteEnable 0x06
 #define W25X_WriteDisable 0x04
 #define W25X_ReadStatusReg 0x05
@@ -35,9 +35,9 @@
 
 #define WIP_Flag 0x01 /* Write In Progress (WIP) flag */
 #define Dummy_Byte 0xFF
-/*ÃüÁî¶¨Òå-½áÎ²*******************************/
+/*å‘½ä»¤å®šä¹‰-ç»“å°¾*******************************/
 
-/*SPI½Ó¿Ú¶¨Òå-¿ªÍ·****************************/
+/*SPIæ¥å£å®šä¹‰-å¼€å¤´****************************/
 #define FLASH_SPI SPI1
 #define FLASH_SPI_CLK RCC_APB2Periph_SPI1
 #define FLASH_SPI_CLK_INIT RCC_APB2PeriphClockCmd
@@ -66,13 +66,13 @@
 
 #define SPI_FLASH_CS_LOW() GPIO_ResetBits(FLASH_CS_GPIO_PORT, FLASH_CS_PIN)
 #define SPI_FLASH_CS_HIGH() GPIO_SetBits(FLASH_CS_GPIO_PORT, FLASH_CS_PIN)
-/*SPI½Ó¿Ú¶¨Òå-½áÎ²****************************/
+/*SPIæ¥å£å®šä¹‰-ç»“å°¾****************************/
 
-/*µÈ´ı³¬Ê±Ê±¼ä*/
+/*ç­‰å¾…è¶…æ—¶æ—¶é—´*/
 #define SPIT_FLAG_TIMEOUT ((uint32_t)0x1000)
 #define SPIT_LONG_TIMEOUT ((uint32_t)(10 * SPIT_FLAG_TIMEOUT))
 
-/*ĞÅÏ¢Êä³ö*/
+/*ä¿¡æ¯è¾“å‡º*/
 #define FLASH_DEBUG_ON 1
 
 #define FLASH_INFO(fmt, arg...) printf("<<-FLASH-INFO->> " fmt "\n", ##arg)

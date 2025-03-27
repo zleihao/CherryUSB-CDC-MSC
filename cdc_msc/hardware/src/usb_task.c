@@ -150,7 +150,7 @@ const uint8_t cdc_msc_descriptor[] = {
 
 static struct cdc_line_coding *g_cdc_coding;
 
-/* usb cdc Ïà¹Ø²ÎÊı */
+/* usb cdc ç›¸å…³å‚æ•° */
 uint8_t g_usb2uart_config;
 uint8_t g_usb2uart_transfer;
 
@@ -207,8 +207,8 @@ static void usbd_event_handler(uint8_t busid, uint8_t event)
 
 void usbd_msc_get_cap(uint8_t busid, uint8_t lun, uint32_t *block_num, uint32_t *block_size)
 {
-    *block_size = 512;                              // USB MSC ¹æ·¶£¬ÉÈÇø´óĞ¡¹Ì¶¨ 512B
-    *block_num = (2 * 1024 * 1024) / (*block_size); // ¼ÆËãÉÈÇø×ÜÊı (2MB / 512)
+    *block_size = 512;                              // USB MSC è§„èŒƒï¼Œæ‰‡åŒºå¤§å°å›ºå®š 512B
+    *block_num = (2 * 1024 * 1024) / (*block_size); // è®¡ç®—æ‰‡åŒºæ€»æ•° (2MB / 512)
 }
 int usbd_msc_sector_read(uint8_t busid, uint8_t lun, uint32_t sector, uint8_t *buffer, uint32_t length)
 {
@@ -225,8 +225,8 @@ static struct usbd_interface intf0;
 /* CDC */
 void usbd_cdc_acm_bulk_out(uint8_t busid, uint8_t ep, uint32_t nbytes)
 {
-    /* µ±Ö´ĞĞµ½¸Ãº¯ÊıÊ±£¬±¾ÖÊÉÏÊı¾İÒÑ¾­ÔÚusb_tmpbufferÁË */
-    //Ğ´µ½g_usb_rxÖĞ
+    /* å½“æ‰§è¡Œåˆ°è¯¥å‡½æ•°æ—¶ï¼Œæœ¬è´¨ä¸Šæ•°æ®å·²ç»åœ¨usb_tmpbufferäº† */
+    //å†™åˆ°g_usb_rxä¸­
     chry_ringbuffer_write(&g_usb_rx, usb_tmpbuffer, nbytes);
 
     if (chry_ringbuffer_get_free(&g_usb_rx) > 64) {
@@ -298,7 +298,7 @@ void usbd_cdc_acm_set_line_coding(uint8_t busid, uint8_t intf, struct cdc_line_c
     if (memcmp(line_coding, (uint8_t *)&g_cdc_coding, sizeof(struct cdc_line_coding)) != 0) {
         memcpy((uint8_t *)&g_cdc_coding, line_coding, sizeof(struct cdc_line_coding));
 
-        /* Æô¶¯´®¿ÚÅäÖÃ */
+        /* å¯åŠ¨ä¸²å£é…ç½® */
         g_usb2uart_config = 1;
         g_usb2uart_transfer = 0;
     }
@@ -318,7 +318,7 @@ void usb2uart_handler(uint8_t busid)
 
     if (g_usb2uart_config) {
         g_usb2uart_config = 0;
-        /* ¿ªÊ¼ÅäÖÃ */
+        /* å¼€å§‹é…ç½® */
         usb2uart_uart_config_callback((struct cdc_line_coding *)&g_cdc_coding);
         g_usb_tx_idle_flag = 1;
         g_uart_tx_idle_flag = 1;
@@ -331,9 +331,9 @@ void usb2uart_handler(uint8_t busid)
 
     /* usb tx idle */
     if (g_usb_tx_idle_flag) {
-        if (chry_ringbuffer_get_used(&g_uart_rx)) { //ÅĞ¶Ïuart rxÊÇ·ñ½ÓÊÕµ½Êı¾İ
+        if (chry_ringbuffer_get_used(&g_uart_rx)) { //åˆ¤æ–­uart rxæ˜¯å¦æ¥æ”¶åˆ°æ•°æ®
             g_usb_tx_idle_flag = 0;
-            //ÒâÎ¶×Å¿ÉÒÔ°Ñuart½ÓÊÕµ½µÄÊı¾İĞ´µ½usb in endpoint
+            //æ„å‘³ç€å¯ä»¥æŠŠuartæ¥æ”¶åˆ°çš„æ•°æ®å†™åˆ°usb in endpoint
             buffer = chry_ringbuffer_linear_read_setup(&g_uart_rx, &size);
 
             memcpy(_usbtx_buffer, buffer, size);
@@ -344,12 +344,12 @@ void usb2uart_handler(uint8_t busid)
 
     /* uart tx idle */
     if (g_uart_tx_idle_flag) {
-        if (chry_ringbuffer_get_used(&g_usb_rx)) { //ÅĞ¶Ïuart rxÊÇ·ñ½ÓÊÕµ½Êı¾İ
+        if (chry_ringbuffer_get_used(&g_usb_rx)) { //åˆ¤æ–­uart rxæ˜¯å¦æ¥æ”¶åˆ°æ•°æ®
             g_uart_rx_idle_flag = 0;
-            //ÒâÎ¶×Å¿ÉÒÔ°Ñuart½ÓÊÕµ½µÄÊı¾İĞ´µ½usb in endpoint
+            //æ„å‘³ç€å¯ä»¥æŠŠuartæ¥æ”¶åˆ°çš„æ•°æ®å†™åˆ°usb in endpoint
             buffer = chry_ringbuffer_linear_read_setup(&g_usb_rx, &size);
 
-            /* Í¨¹ıuart tx·¢ËÍ³öÈ¥ */
+            /* é€šè¿‡uart txå‘é€å‡ºå» */
             usb2uart_uart_send_bydma(buffer, size);
         }
     }
@@ -370,10 +370,10 @@ void chry_dap_usb2uart_uart_send_complete(uint32_t size)
     chry_ringbuffer_linear_read_done(&g_usb_rx, size);
 
     if (chry_ringbuffer_get_used(&g_usb_rx)) {
-        //ÒâÎ¶×Å¿ÉÒÔ°Ñuart½ÓÊÕµ½µÄÊı¾İĞ´µ½usb in endpoint
+        //æ„å‘³ç€å¯ä»¥æŠŠuartæ¥æ”¶åˆ°çš„æ•°æ®å†™åˆ°usb in endpoint
         buffer = chry_ringbuffer_linear_read_setup(&g_usb_rx, &size);
 
-        /* Í¨¹ıuart tx·¢ËÍ³öÈ¥ */
+        /* é€šè¿‡uart txå‘é€å‡ºå» */
         usb2uart_uart_send_bydma(buffer, size);
     }
     else {
@@ -381,7 +381,7 @@ void chry_dap_usb2uart_uart_send_complete(uint32_t size)
     }
 }
 
-/* ´´½¨ usb ÈÎÎñ */
+/* åˆ›å»º usb ä»»åŠ¡ */
 static StaticTask_t usbd_task_tcb;
 
 static void usbd_task_handler(void *param)
