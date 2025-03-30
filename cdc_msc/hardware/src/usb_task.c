@@ -16,8 +16,8 @@
 #define CDC_IN_EP 0x83
 #define CDC_OUT_EP 0x03
 
-#define USBD_VID 0xFFFF
-#define USBD_PID 0xFFFF
+#define USBD_VID 0x1234
+#define USBD_PID 0x4321
 #define USBD_MAX_POWER 100
 #define USBD_LANGID_STRING 1033
 

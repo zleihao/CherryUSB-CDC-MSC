@@ -34,5 +34,6 @@ dist
 *.code-workspace
 *.eide.*
 .history
+CMakeLists.txt
 cmake-build-debug
 *.mk
