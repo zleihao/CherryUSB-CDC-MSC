@@ -11,14 +11,20 @@
             "request": "launch",
             "type": "cortex-debug",
             "servertype": "openocd",
+            "device": "STM32F407VET6",
             "configFiles": [
                 "C:/openocd/openocd/scripts/interface/cmsis-dap.cfg",
                 "C:/openocd/openocd/scripts/target/stm32f4x.cfg"
             ],
+            "svdFile": "./core/cmsis/svd/stm32f4/STM32F407.svd", // 指定 SVD 文件路径
+            "liveWatch": { //变量窗口激活和设置每秒的采样次数
+                "enabled": true,
+                "samplesPerSecond": 4
+            },
+            "armToolchainPath": "C:/gcc-arm-none-eabi/bin", // 替换为你的工具链路径
             "searchDir": [],
             "runToEntryPoint": "main",
-            "showDevDebugOutput": "none",
-            "svdPath": "./core/cmsis/svd/stm32f4/STM32F407.svd", // 指定 SVD 文件路径
+            "showDevDebugOutput": "none" // 👈 开启原始 GDB 输出，有助于调试寄存器问题
         }
     ]
 }

@@ -56,7 +56,7 @@ extern int kprintf(const char *fmt, ...);
 #endif
 
 #ifndef CONFIG_USBDEV_MSC_MAX_BUFSIZE
-#define CONFIG_USBDEV_MSC_MAX_BUFSIZE 512
+#define CONFIG_USBDEV_MSC_MAX_BUFSIZE 8192
 #endif
 
 #ifndef CONFIG_USBDEV_MSC_MANUFACTURER_STRING
@@ -222,8 +222,8 @@ extern int kprintf(const char *fmt, ...);
  */
 #define CONFIG_USB_DWC2_RXALL_FIFO_SIZE (512 / 4)
 /* IN Endpoints Max packet Size / 4 */
-#define CONFIG_USB_DWC2_TX0_FIFO_SIZE (256 / 4)
-#define CONFIG_USB_DWC2_TX1_FIFO_SIZE (256 / 4)
+#define CONFIG_USB_DWC2_TX0_FIFO_SIZE (64 / 4)
+#define CONFIG_USB_DWC2_TX1_FIFO_SIZE (512 / 4)
 #define CONFIG_USB_DWC2_TX2_FIFO_SIZE (64 / 4)
 #define CONFIG_USB_DWC2_TX3_FIFO_SIZE (64 / 4)
 #define CONFIG_USB_DWC2_TX4_FIFO_SIZE (0 / 4)

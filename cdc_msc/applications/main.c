@@ -101,12 +101,10 @@ int kprintf(const char *fmt, ...)
 extern int led_init(void);
 void bsp_init(void)
 {
+    NVIC_SetPriorityGrouping(NVIC_PriorityGroup_2);
     led_init();
     Debug_USART_Config();
 }
-
-FATFS fs; /* FatFs文件系统对象 */
-uint8_t work[4096];
 
 /**
   * @brief  主函数
@@ -116,8 +114,6 @@ uint8_t work[4096];
 int main(void)
 {
     bsp_init();
-
-    f_mount(&fs, "1:", 1);
 
     AppTaskCreate();
 

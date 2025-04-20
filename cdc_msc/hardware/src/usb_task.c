@@ -10,7 +10,7 @@
 #include "usart.h"
 
 #define MSC_IN_EP 0x81
-#define MSC_OUT_EP 0x02
+#define MSC_OUT_EP 0x01
 
 #define CDC_INT_EP 0x82
 #define CDC_IN_EP 0x83
@@ -204,20 +204,37 @@ static void usbd_event_handler(uint8_t busid, uint8_t event)
 }
 
 /* MSC */
+#define IS_ATA 1
+#include "bsp_sdio_sd.h"
+extern SD_CardInfo SDCardInfo;
 
 void usbd_msc_get_cap(uint8_t busid, uint8_t lun, uint32_t *block_num, uint32_t *block_size)
 {
+#if IS_ATA
+    *block_size = SDCardInfo.CardBlockSize;                          // USB MSC 规范，扇区大小固定 512B
+    *block_num = SDCardInfo.CardCapacity / SDCardInfo.CardBlockSize; // 计算扇区总数 (2MB / 512)
+#else
     *block_size = 512;                              // USB MSC 规范，扇区大小固定 512B
     *block_num = (2 * 1024 * 1024) / (*block_size); // 计算扇区总数 (2MB / 512)
+#endif
 }
+
 int usbd_msc_sector_read(uint8_t busid, uint8_t lun, uint32_t sector, uint8_t *buffer, uint32_t length)
 {
+#if IS_ATA
+    return disk_read(0, buffer, sector, length / SDCardInfo.CardBlockSize) == FR_OK ? 0 : 1;
+#else
     return disk_read(1, buffer, sector, length / 512) == FR_OK ? 0 : 1;
+#endif
 }
 
 int usbd_msc_sector_write(uint8_t busid, uint8_t lun, uint32_t sector, uint8_t *buffer, uint32_t length)
 {
+#if IS_ATA
+    return disk_write(0, buffer, sector, length / SDCardInfo.CardBlockSize) == FR_OK ? 0 : 1;
+#else
     return disk_write(1, buffer, sector, length / 512) == FR_OK ? 0 : 1;
+#endif
 }
 
 static struct usbd_interface intf0;
@@ -231,8 +248,7 @@ void usbd_cdc_acm_bulk_out(uint8_t busid, uint8_t ep, uint32_t nbytes)
 
     if (chry_ringbuffer_get_free(&g_usb_rx) > 64) {
         usbd_ep_start_read(busid, CDC_OUT_EP, usb_tmpbuffer, 64);
-    }
-    else {
+    } else {
         g_usb_rx_idle_flag = 1;
     }
 }
@@ -246,16 +262,14 @@ void usbd_cdc_acm_bulk_in(uint8_t busid, uint8_t ep, uint32_t nbytes)
     if ((nbytes % usbd_get_ep_mps(busid, ep)) == 0 && nbytes) {
         /* send zlp */
         usbd_ep_start_write(busid, CDC_IN_EP, NULL, 0);
-    }
-    else {
+    } else {
         if (chry_ringbuffer_get_used(&g_uart_rx)) {
             buffer = chry_ringbuffer_linear_read_setup(&g_uart_rx, &size);
 
             memcpy(_usbtx_buffer, buffer, size);
 
             usbd_ep_start_write(busid, CDC_IN_EP, _usbtx_buffer, size);
-        }
-        else {
+        } else {
             g_usb_tx_idle_flag = 1;
         }
     }
@@ -375,8 +389,7 @@ void chry_dap_usb2uart_uart_send_complete(uint32_t size)
 
         /* 通过uart tx发送出去 */
         usb2uart_uart_send_bydma(buffer, size);
-    }
-    else {
+    } else {
         g_uart_tx_idle_flag = 1;
     }
 }
@@ -386,6 +399,14 @@ static StaticTask_t usbd_task_tcb;
 
 static void usbd_task_handler(void *param)
 {
+    FATFS fs;
+
+#if IS_ATA
+    f_mount(&fs, "0:", 1);
+#else
+    f_mount(&fs, "1:", 1);
+#endif
+
     cdc_msc_init(0, 0x50000000UL);
 
     while (1) {
@@ -396,7 +417,7 @@ static void usbd_task_handler(void *param)
 
 void usbd_task_handler_init()
 {
-    xTaskCreate(usbd_task_handler, "usbd_task_handler", 128, NULL, 4, (TaskHandle_t *)&usbd_task_tcb);
+    xTaskCreate(usbd_task_handler, "usbd_task_handler", 2048, NULL, 4, (TaskHandle_t *)&usbd_task_tcb);
 }
 INIT_APP_TASK(usbd_task_handler_init);
 

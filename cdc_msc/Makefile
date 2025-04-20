@@ -81,7 +81,7 @@ FREERTOS_INC =	        \
 # debug build?
 DEBUG = 1
 # optimization
-OPT = -O0
+OPT = -O1
 
 #######################################
 # paths
@@ -123,6 +123,7 @@ CC = $(PREFIX)gcc
 AS = $(PREFIX)gcc -x assembler-with-cpp
 CP = $(PREFIX)objcopy
 SZ = $(PREFIX)size
+OBJDUMP = $(PREFIX)objdump
 endif
 HEX = $(CP) -O ihex
 BIN = $(CP) -O binary -S
@@ -219,6 +220,10 @@ $(BUILD_DIR)/%.hex: $(BUILD_DIR)/%.elf | $(BUILD_DIR)
 
 $(BUILD_DIR)/%.bin: $(BUILD_DIR)/%.elf | $(BUILD_DIR)
 	$(BIN) $< $@
+
+# 生成反汇编文件（新增规则）
+$(BUILD_DIR)/$(TARGET).dis: $(BUILD_DIR)/$(TARGET).elf
+	$(OBJDUMP) -D -S $< > $@
 
 $(BUILD_DIR):
 	mkdir $@
