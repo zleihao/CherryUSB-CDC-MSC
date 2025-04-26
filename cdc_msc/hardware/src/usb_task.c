@@ -27,6 +27,7 @@
 
 #ifdef CONFIG_USB_HS
 #define MSC_MAX_MPS 512
+#define CDC_MAX_MPS 512
 #else
 #define MSC_MAX_MPS 64
 #define CDC_MAX_MPS 64
@@ -139,9 +140,9 @@ const uint8_t cdc_msc_descriptor[] = {
     USB_DESCRIPTOR_TYPE_DEVICE_QUALIFIER,
     0x00,
     0x02,
-    0x00,
-    0x00,
-    0x00,
+    0x02,
+    0x02,
+    0x01,
     0x40,
     0x01,
     0x00,
@@ -407,8 +408,11 @@ static void usbd_task_handler(void *param)
     f_mount(&fs, "1:", 1);
 #endif
 
+#ifdef USE_USB_FS
     cdc_msc_init(0, 0x50000000UL);
-
+#else
+    cdc_msc_init(0, 0x40040000UL);
+#endif
     while (1) {
         usb2uart_handler(0);
         vTaskDelay(3);

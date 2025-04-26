@@ -6,7 +6,7 @@
     "configurations": [
         {
             "cwd": "${workspaceRoot}",
-            "executable": "./build/Hao.elf",
+            "executable": "./build/stm32f4x.elf",
             "name": "Debug with OpenOCD",
             "request": "launch",
             "type": "cortex-debug",
@@ -24,7 +24,7 @@
             "armToolchainPath": "C:/gcc-arm-none-eabi/bin", // 替换为你的工具链路径
             "searchDir": [],
             "runToEntryPoint": "main",
-            "showDevDebugOutput": "none" // 👈 开启原始 GDB 输出，有助于调试寄存器问题
+            "showDevDebugOutput": "none", // 👈 开启原始 GDB 输出，有助于调试寄存器问题
         }
     ]
 }

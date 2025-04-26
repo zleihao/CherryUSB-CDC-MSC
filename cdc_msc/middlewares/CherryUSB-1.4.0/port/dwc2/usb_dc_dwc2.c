@@ -174,8 +174,7 @@ static inline void dwc2_set_mode(uint8_t busid, uint8_t mode)
 
     if (mode == USB_OTG_MODE_HOST) {
         USB_OTG_GLB->GUSBCFG |= USB_OTG_GUSBCFG_FHMOD;
-    }
-    else if (mode == USB_OTG_MODE_DEVICE) {
+    } else if (mode == USB_OTG_MODE_DEVICE) {
         USB_OTG_GLB->GUSBCFG |= USB_OTG_GUSBCFG_FDMOD;
     }
 
@@ -240,49 +239,38 @@ static void dwc2_set_turnaroundtime(uint8_t busid, uint32_t hclk, uint8_t speed)
         if ((hclk >= 14200000U) && (hclk < 15000000U)) {
             /* hclk Clock Range between 14.2-15 MHz */
             UsbTrd = 0xFU;
-        }
-        else if ((hclk >= 15000000U) && (hclk < 16000000U)) {
+        } else if ((hclk >= 15000000U) && (hclk < 16000000U)) {
             /* hclk Clock Range between 15-16 MHz */
             UsbTrd = 0xEU;
-        }
-        else if ((hclk >= 16000000U) && (hclk < 17200000U)) {
+        } else if ((hclk >= 16000000U) && (hclk < 17200000U)) {
             /* hclk Clock Range between 16-17.2 MHz */
             UsbTrd = 0xDU;
-        }
-        else if ((hclk >= 17200000U) && (hclk < 18500000U)) {
+        } else if ((hclk >= 17200000U) && (hclk < 18500000U)) {
             /* hclk Clock Range between 17.2-18.5 MHz */
             UsbTrd = 0xCU;
-        }
-        else if ((hclk >= 18500000U) && (hclk < 20000000U)) {
+        } else if ((hclk >= 18500000U) && (hclk < 20000000U)) {
             /* hclk Clock Range between 18.5-20 MHz */
             UsbTrd = 0xBU;
-        }
-        else if ((hclk >= 20000000U) && (hclk < 21800000U)) {
+        } else if ((hclk >= 20000000U) && (hclk < 21800000U)) {
             /* hclk Clock Range between 20-21.8 MHz */
             UsbTrd = 0xAU;
-        }
-        else if ((hclk >= 21800000U) && (hclk < 24000000U)) {
+        } else if ((hclk >= 21800000U) && (hclk < 24000000U)) {
             /* hclk Clock Range between 21.8-24 MHz */
             UsbTrd = 0x9U;
-        }
-        else if ((hclk >= 24000000U) && (hclk < 27700000U)) {
+        } else if ((hclk >= 24000000U) && (hclk < 27700000U)) {
             /* hclk Clock Range between 24-27.7 MHz */
             UsbTrd = 0x8U;
-        }
-        else if ((hclk >= 27700000U) && (hclk < 32000000U)) {
+        } else if ((hclk >= 27700000U) && (hclk < 32000000U)) {
             /* hclk Clock Range between 27.7-32 MHz */
             UsbTrd = 0x7U;
-        }
-        else /* if(hclk >= 32000000) */
+        } else /* if(hclk >= 32000000) */
         {
             /* hclk Clock Range between 32-200 MHz */
             UsbTrd = 0x6U;
         }
-    }
-    else if (speed == USB_OTG_SPEED_HIGH) {
+    } else if (speed == USB_OTG_SPEED_HIGH) {
         UsbTrd = USBD_HS_TRDT_VALUE;
-    }
-    else {
+    } else {
         UsbTrd = USBD_DEFAULT_TRDT_VALUE;
     }
 
@@ -311,8 +299,7 @@ static void dwc2_set_txfifo(uint8_t busid, uint8_t fifo, uint16_t size)
 
     if (fifo == 0U) {
         USB_OTG_GLB->DIEPTXF0_HNPTXFSIZ = ((uint32_t)size << 16) | tx_offset;
-    }
-    else {
+    } else {
         tx_offset += (USB_OTG_GLB->DIEPTXF0_HNPTXFSIZ) >> 16;
         for (i = 0U; i < (fifo - 1U); i++) {
             tx_offset += (USB_OTG_GLB->DIEPTXF[i] >> 16);
@@ -332,11 +319,9 @@ static uint8_t dwc2_get_devspeed(uint8_t busid)
 
     if (DevEnumSpeed == DSTS_ENUMSPD_HS_PHY_30MHZ_OR_60MHZ) {
         speed = USB_OTG_SPEED_HIGH;
-    }
-    else if ((DevEnumSpeed == DSTS_ENUMSPD_FS_PHY_30MHZ_OR_60MHZ) || (DevEnumSpeed == DSTS_ENUMSPD_FS_PHY_48MHZ)) {
+    } else if ((DevEnumSpeed == DSTS_ENUMSPD_FS_PHY_30MHZ_OR_60MHZ) || (DevEnumSpeed == DSTS_ENUMSPD_FS_PHY_48MHZ)) {
         speed = USB_OTG_SPEED_FULL;
-    }
-    else {
+    } else {
         speed = 0xFU;
     }
 
@@ -579,8 +564,7 @@ int usb_dc_init(uint8_t busid)
 #else
     if (hsphy_type == 0) {
         USB_OTG_DEV->DCFG |= USB_OTG_SPEED_FULL;
-    }
-    else {
+    } else {
         USB_OTG_DEV->DCFG |= USB_OTG_SPEED_HIGH_IN_FULL;
     }
 #endif
@@ -725,11 +709,9 @@ uint8_t usbd_get_port_speed(uint8_t busid)
 
     if (DevEnumSpeed == DSTS_ENUMSPD_HS_PHY_30MHZ_OR_60MHZ) {
         speed = USB_SPEED_HIGH;
-    }
-    else if ((DevEnumSpeed == DSTS_ENUMSPD_FS_PHY_30MHZ_OR_60MHZ) || (DevEnumSpeed == DSTS_ENUMSPD_FS_PHY_48MHZ)) {
+    } else if ((DevEnumSpeed == DSTS_ENUMSPD_FS_PHY_30MHZ_OR_60MHZ) || (DevEnumSpeed == DSTS_ENUMSPD_FS_PHY_48MHZ)) {
         speed = USB_SPEED_FULL;
-    }
-    else {
+    } else {
         speed = USB_SPEED_FULL;
     }
 
@@ -756,13 +738,11 @@ int usbd_ep_open(uint8_t busid, const struct usb_endpoint_descriptor *ep)
                                               ((uint32_t)USB_GET_ENDPOINT_TYPE(ep->bmAttributes) << 18) |
                                               USB_OTG_DIEPCTL_SD0PID_SEVNFRM | USB_OTG_DOEPCTL_USBAEP;
         }
-    }
-    else {
+    } else {
         uint16_t fifo_size;
         if (ep_idx == 0) {
             fifo_size = (USB_OTG_GLB->DIEPTXF0_HNPTXFSIZ >> 16);
-        }
-        else {
+        } else {
             fifo_size = (USB_OTG_GLB->DIEPTXF[ep_idx - 1U] >> 16);
         }
         if ((fifo_size * 4) < USB_GET_MAXPACKETSIZE(ep->wMaxPacketSize)) {
@@ -810,8 +790,7 @@ int usbd_ep_close(uint8_t busid, const uint8_t ep)
         USB_OTG_DEV->DEACHMSK &= ~(USB_OTG_DAINTMSK_OEPM & ((uint32_t)(1UL << (ep_idx & 0x07)) << 16));
         USB_OTG_DEV->DAINTMSK &= ~(USB_OTG_DAINTMSK_OEPM & ((uint32_t)(1UL << (ep_idx & 0x07)) << 16));
         USB_OTG_OUTEP(ep_idx)->DOEPCTL = 0;
-    }
-    else {
+    } else {
         if (USB_OTG_INEP(ep_idx)->DIEPCTL & USB_OTG_DIEPCTL_EPENA) {
             USB_OTG_INEP(ep_idx)->DIEPCTL |= USB_OTG_DIEPCTL_SNAK;
             USB_OTG_INEP(ep_idx)->DIEPCTL |= USB_OTG_DIEPCTL_EPDIS;
@@ -844,8 +823,7 @@ int usbd_ep_set_stall(uint8_t busid, const uint8_t ep)
             USB_OTG_OUTEP(ep_idx)->DOEPCTL &= ~(USB_OTG_DOEPCTL_EPDIS);
         }
         USB_OTG_OUTEP(ep_idx)->DOEPCTL |= USB_OTG_DOEPCTL_STALL;
-    }
-    else {
+    } else {
         if (((USB_OTG_INEP(ep_idx)->DIEPCTL & USB_OTG_DIEPCTL_EPENA) == 0U) && (ep_idx != 0U)) {
             USB_OTG_INEP(ep_idx)->DIEPCTL &= ~(USB_OTG_DIEPCTL_EPDIS);
         }
@@ -869,8 +847,7 @@ int usbd_ep_clear_stall(uint8_t busid, const uint8_t ep)
             (g_dwc2_udc[busid].out_ep[ep_idx].ep_type == USB_ENDPOINT_TYPE_BULK)) {
             USB_OTG_OUTEP(ep_idx)->DOEPCTL |= USB_OTG_DOEPCTL_SD0PID_SEVNFRM; /* DATA0 */
         }
-    }
-    else {
+    } else {
         USB_OTG_INEP(ep_idx)->DIEPCTL &= ~USB_OTG_DIEPCTL_STALL;
         if ((g_dwc2_udc[busid].in_ep[ep_idx].ep_type == USB_ENDPOINT_TYPE_INTERRUPT) ||
             (g_dwc2_udc[busid].in_ep[ep_idx].ep_type == USB_ENDPOINT_TYPE_BULK)) {
@@ -887,16 +864,13 @@ int usbd_ep_is_stalled(uint8_t busid, const uint8_t ep, uint8_t *stalled)
     if (USB_EP_DIR_IS_OUT(ep)) {
         if (USB_OTG_OUTEP(ep_idx)->DOEPCTL & USB_OTG_DOEPCTL_STALL) {
             *stalled = 1;
-        }
-        else {
+        } else {
             *stalled = 0;
         }
-    }
-    else {
+    } else {
         if (USB_OTG_INEP(ep_idx)->DIEPCTL & USB_OTG_DIEPCTL_STALL) {
             *stalled = 1;
-        }
-        else {
+        } else {
             *stalled = 0;
         }
     }
@@ -952,8 +926,7 @@ int usbd_ep_start_write(uint8_t busid, const uint8_t ep, const uint8_t *data, ui
         g_dwc2_udc[busid].in_ep[ep_idx].xfer_len = data_len;
         USB_OTG_INEP(ep_idx)->DIEPTSIZ |= (USB_OTG_DIEPTSIZ_PKTCNT & (1U << 19));
         USB_OTG_INEP(ep_idx)->DIEPTSIZ |= (USB_OTG_DIEPTSIZ_XFRSIZ & data_len);
-    }
-    else {
+    } else {
         pktcnt = (uint16_t)((data_len + g_dwc2_udc[busid].in_ep[ep_idx].ep_mps - 1U) /
                             g_dwc2_udc[busid].in_ep[ep_idx].ep_mps);
 
@@ -965,8 +938,7 @@ int usbd_ep_start_write(uint8_t busid, const uint8_t ep, const uint8_t *data, ui
         if ((USB_OTG_DEV->DSTS & (1U << 8)) == 0U) {
             USB_OTG_INEP(ep_idx)->DIEPCTL &= ~USB_OTG_DIEPCTL_SD0PID_SEVNFRM;
             USB_OTG_INEP(ep_idx)->DIEPCTL |= USB_OTG_DIEPCTL_SODDFRM;
-        }
-        else {
+        } else {
             USB_OTG_INEP(ep_idx)->DIEPCTL &= ~USB_OTG_DIEPCTL_SODDFRM;
             USB_OTG_INEP(ep_idx)->DIEPCTL |= USB_OTG_DIEPCTL_SD0PID_SEVNFRM;
         }
@@ -1029,8 +1001,7 @@ int usbd_ep_start_read(uint8_t busid, const uint8_t ep, uint8_t *data, uint32_t 
         g_dwc2_udc[busid].out_ep[ep_idx].xfer_len = data_len;
         USB_OTG_OUTEP(ep_idx)->DOEPTSIZ |= (USB_OTG_DOEPTSIZ_PKTCNT & (1U << 19));
         USB_OTG_OUTEP(ep_idx)->DOEPTSIZ |= (USB_OTG_DOEPTSIZ_XFRSIZ & data_len);
-    }
-    else {
+    } else {
         pktcnt = (uint16_t)((data_len + g_dwc2_udc[busid].out_ep[ep_idx].ep_mps - 1U) /
                             g_dwc2_udc[busid].out_ep[ep_idx].ep_mps);
 
@@ -1045,8 +1016,7 @@ int usbd_ep_start_read(uint8_t busid, const uint8_t ep, uint8_t *data, uint32_t 
         if ((USB_OTG_DEV->DSTS & (1U << 8)) == 0U) {
             USB_OTG_OUTEP(ep_idx)->DOEPCTL &= ~USB_OTG_DOEPCTL_SD0PID_SEVNFRM;
             USB_OTG_OUTEP(ep_idx)->DOEPCTL |= USB_OTG_DOEPCTL_SODDFRM;
-        }
-        else {
+        } else {
             USB_OTG_OUTEP(ep_idx)->DOEPCTL &= ~USB_OTG_DOEPCTL_SODDFRM;
             USB_OTG_OUTEP(ep_idx)->DOEPCTL |= USB_OTG_DOEPCTL_SD0PID_SEVNFRM;
         }
@@ -1084,12 +1054,10 @@ void USBD_IRQHandler(uint8_t busid)
                     dwc2_ep_read(busid, g_dwc2_udc[busid].out_ep[ep_idx].xfer_buf, read_count);
                     g_dwc2_udc[busid].out_ep[ep_idx].xfer_buf += read_count;
                 }
-            }
-            else if (((temp & USB_OTG_GRXSTSP_PKTSTS) >> USB_OTG_GRXSTSP_PKTSTS_Pos) == STS_SETUP_UPDT) {
+            } else if (((temp & USB_OTG_GRXSTSP_PKTSTS) >> USB_OTG_GRXSTSP_PKTSTS_Pos) == STS_SETUP_UPDT) {
                 read_count = (temp & USB_OTG_GRXSTSP_BCNT) >> 4;
                 dwc2_ep_read(busid, (uint8_t *)&g_dwc2_udc[busid].setup, read_count);
-            }
-            else {
+            } else {
                 /* ... */
             }
             USB_UNMASK_INTERRUPT(USB_OTG_GLB, USB_OTG_GINTSTS_RXFLVL);
@@ -1113,8 +1081,7 @@ void USBD_IRQHandler(uint8_t busid)
                                  * 那么，此时调用该函数的意义就是重置usb接收size寄存器，DOEPTSIZ
                                  */
                                 dwc2_ep0_start_read_setup(busid, (uint8_t *)&g_dwc2_udc[busid].setup);
-                            }
-                            else {
+                            } else {
                                 g_dwc2_udc[busid].out_ep[ep_idx].actual_xfer_len =
                                     g_dwc2_udc[busid].out_ep[ep_idx].xfer_len -
                                     ((USB_OTG_OUTEP(ep_idx)->DOEPTSIZ) & USB_OTG_DOEPTSIZ_XFRSIZ);
@@ -1123,8 +1090,7 @@ void USBD_IRQHandler(uint8_t busid)
                                     0x00,
                                     g_dwc2_udc[busid].out_ep[ep_idx].actual_xfer_len); // 得到主机发送的数据
                             }
-                        }
-                        else {
+                        } else {
                             g_dwc2_udc[busid].out_ep[ep_idx].actual_xfer_len =
                                 g_dwc2_udc[busid].out_ep[ep_idx].xfer_len -
                                 ((USB_OTG_OUTEP(ep_idx)->DOEPTSIZ) & USB_OTG_DOEPTSIZ_XFRSIZ);
@@ -1164,13 +1130,11 @@ void USBD_IRQHandler(uint8_t busid)
                                                                         USB_REQUEST_DIR_MASK) == USB_REQUEST_DIR_OUT)) {
                                 /* In status, start reading setup */
                                 dwc2_ep0_start_read_setup(busid, (uint8_t *)&g_dwc2_udc[busid].setup);
-                            }
-                            else if (g_dwc2_udc[busid].setup.wLength == 0) {
+                            } else if (g_dwc2_udc[busid].setup.wLength == 0) {
                                 /* In status, start reading setup */
                                 dwc2_ep0_start_read_setup(busid, (uint8_t *)&g_dwc2_udc[busid].setup);
                             }
-                        }
-                        else {
+                        } else {
                             g_dwc2_udc[busid].in_ep[ep_idx].actual_xfer_len =
                                 g_dwc2_udc[busid].in_ep[ep_idx].xfer_len -
                                 ((USB_OTG_INEP(ep_idx)->DIEPTSIZ) & USB_OTG_DIEPTSIZ_XFRSIZ);
@@ -1198,18 +1162,15 @@ void USBD_IRQHandler(uint8_t busid)
                 if (i == 0U) {
                     USB_OTG_INEP(i)->DIEPCTL = USB_OTG_DIEPCTL_SNAK;
                     USB_OTG_OUTEP(i)->DOEPCTL = USB_OTG_DOEPCTL_SNAK;
-                }
-                else {
+                } else {
                     if (USB_OTG_INEP(i)->DIEPCTL & USB_OTG_DIEPCTL_EPENA) {
                         USB_OTG_INEP(i)->DIEPCTL = (USB_OTG_DIEPCTL_EPDIS | USB_OTG_DIEPCTL_SNAK);
-                    }
-                    else {
+                    } else {
                         USB_OTG_INEP(i)->DIEPCTL = 0;
                     }
                     if (USB_OTG_OUTEP(i)->DOEPCTL & USB_OTG_DOEPCTL_EPENA) {
                         USB_OTG_OUTEP(i)->DOEPCTL = (USB_OTG_DOEPCTL_EPDIS | USB_OTG_DOEPCTL_SNAK);
-                    }
-                    else {
+                    } else {
                         USB_OTG_OUTEP(i)->DOEPCTL = 0;
                     }
                 }
@@ -1250,8 +1211,7 @@ void USBD_IRQHandler(uint8_t busid)
                 if ((USB_OTG_DEV->DSTS & (1U << 8)) != 0U) {
                     USB_OTG_OUTEP(ep_idx)->DOEPCTL |= USB_OTG_DOEPCTL_SD0PID_SEVNFRM;
                     USB_OTG_OUTEP(ep_idx)->DOEPCTL &= ~USB_OTG_DOEPCTL_SODDFRM;
-                }
-                else {
+                } else {
                     USB_OTG_OUTEP(ep_idx)->DOEPCTL &= ~USB_OTG_DOEPCTL_SD0PID_SEVNFRM;
                     USB_OTG_OUTEP(ep_idx)->DOEPCTL |= USB_OTG_DOEPCTL_SODDFRM;
                 }
@@ -1275,8 +1235,7 @@ void USBD_IRQHandler(uint8_t busid)
                 if ((USB_OTG_DEV->DSTS & (1U << 8)) != 0U) {
                     USB_OTG_INEP(ep_idx)->DIEPCTL |= USB_OTG_DIEPCTL_SD0PID_SEVNFRM;
                     USB_OTG_INEP(ep_idx)->DIEPCTL &= ~USB_OTG_DIEPCTL_SODDFRM;
-                }
-                else {
+                } else {
                     USB_OTG_INEP(ep_idx)->DIEPCTL &= ~USB_OTG_DIEPCTL_SD0PID_SEVNFRM;
                     USB_OTG_INEP(ep_idx)->DIEPCTL |= USB_OTG_DIEPCTL_SODDFRM;
                 }
@@ -1298,8 +1257,7 @@ void USBD_IRQHandler(uint8_t busid)
         if (gint_status & USB_OTG_GINTSTS_OTGINT) { // 使用OTG中断
             temp = USB_OTG_GLB->GOTGINT;
             if ((temp & USB_OTG_GOTGINT_SEDET) == USB_OTG_GOTGINT_SEDET) {
-            }
-            else {
+            } else {
             }
             USB_OTG_GLB->GOTGINT |= temp;
         }
