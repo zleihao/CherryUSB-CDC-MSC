@@ -134,10 +134,13 @@ int kprintf(const char *fmt, ...)
 }
 
 extern int led_init(void);
+extern int key_init(void);
+
 void bsp_init(void)
 {
     NVIC_SetPriorityGrouping(NVIC_PriorityGroup_2);
     led_init();
+    key_init();
     Debug_USART_Config();
     //初始化tim6
     timer_init();

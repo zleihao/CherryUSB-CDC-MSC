@@ -30,16 +30,44 @@ int led_init(void)
     return 0;
 }
 
+extern uint8_t key_short_press;
+extern uint8_t key_long_press;
+
+uint32_t delay_cnt = 400;
+
 static StaticTask_t led1_task_tcb;
 
 static void led1_task(void *param)
 {
     for (;;) {
+        if (key_short_press) {
+            key_short_press = 0;
+            delay_cnt += 100;
+            if (delay_cnt > 2000)
+                delay_cnt = 100;
+        }
+
+        if (key_long_press) {
+            key_long_press = 0;
+
+            delay_cnt += 200;
+            if (delay_cnt > 2000)
+                delay_cnt = 100;
+        }
+
+        GPIO_ResetBits(GPIOB, GPIO_Pin_2);
+        vTaskDelay(delay_cnt);
+
+        GPIO_SetBits(GPIOB, GPIO_Pin_2);
+        vTaskDelay(delay_cnt);
+
+#if 0
         GPIO_ResetBits(GPIOB, GPIO_Pin_2);
         vTaskDelay(500);
 
         GPIO_SetBits(GPIOB, GPIO_Pin_2);
         vTaskDelay(500);
+#endif
     }
 }
 

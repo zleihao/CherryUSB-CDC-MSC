@@ -5,7 +5,7 @@
 #include "task.h"
 
 /* 工程中的 Task 总个数 */
-#define USER_TASK_NUM 3
+#define USER_TASK_NUM 4
 
 typedef void (*init_task_start_t)();
 
